@@ -7,13 +7,21 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ContentView: View, NetworkDelegate {
+    func onSucess(posts: [Post]) {
+        //posts.append(contentsOf: posts)
+    }
     
-    let posts = [
-        Post(id: "1", title: "HELLO"),
-        Post(id: "2", title: "BOUJOUR"),
-        Post(id: "3", title: "HOLLA")
-    ]
+    func onError(message: String) {
+        
+    }
+    
+    private var posts: [Post] = []
+    
+    private lazy var networkManager: NetworkManager = {
+        let network = NetworkManager(delegate: self)
+        return network
+    }()
     
     var body: some View {
         NavigationView {
@@ -23,11 +31,6 @@ struct ContentView: View {
             .navigationBarTitle("H4X0R NEWS")
         }
     }
-}
-
-struct Post: Identifiable {
-    let id: String
-    let title: String
 }
 
 struct ContentView_Previews: PreviewProvider {
